@@ -39,8 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
     async (content: string, position: vscode.Position) => {      
       let currentDocumentURI = vscode.window.activeTextEditor?.document.uri;
       if (currentDocumentURI) {
-        content = replaceVariables(content);
-        console.log("currentDocumentURI", currentDocumentURI.path);
+        content = replaceVariables(content);        
         let textEncoder: TextEncoder = new TextEncoder();
         if (vscode.workspace.workspaceFolders) {
           let tempFileUri = vscode.Uri.file(
@@ -50,8 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.workspace.fs.writeFile(
             tempFileUri,
             textEncoder.encode(content)
-          );
-          console.log("File is written");
+          );          
           // show the code
           let location = new vscode.Location(
             tempFileUri,
