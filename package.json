@@ -1,5 +1,6 @@
 {
   "name": "markdown-enhanced-code-block",
+  "publisher":"KiranMachhewar",
   "displayName": "Markdown Enhanced Code Block",
   "description": "Enhances the markdown codeblock with features like copy, run, replace variables etc",
   "version": "0.0.1",
