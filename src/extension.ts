@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (vscode.workspace.workspaceFolders) {
           let tempFileUri = vscode.Uri.file(
             vscode.workspace.workspaceFolders[0]?.uri.fsPath +
-              "/markdown-copy-temp.md"
+              "/markdown-enhanced-code-block-temp.md"
           );
           vscode.workspace.fs.writeFile(
             tempFileUri,
