@@ -1,4 +1,4 @@
-# markdown-enhanced-code-block README
+# Markdown Enhanced Code Block
 
 Adds features to markdown codeblocks
 
