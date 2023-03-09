@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { getScriptToRunCode } from "./MarkdownUtil";
 
 /**
  * Codelense provider which finds the code blocks in the markdown files 
@@ -54,13 +55,29 @@ export class CodelensProvider implements vscode.CodeLensProvider {
         if (copyRange) {
           this.codeLenses.push(new vscode.CodeLens(copyRange, copyCommand));
         }
-
+        
         // Add Run Code Command
         const runPosition = new vscode.Position(line.lineNumber, 5);
+        let codeConfigs = content.split('\n')[0].replace(/`/g, "");        
+        let details = {
+          'position' : runPosition,
+          'language' : codeConfigs.split('|')[0],
+          'org':''
+        };        
+        if( ( details.language === 'apex' || 
+            details.language === 'soql') && codeConfigs.split('|').length > 0) {
+          details.org = codeConfigs.split('|')[1];          
+        }
+        let codeLines = content.split('\n');
+        codeLines.splice(0,1);        
+        let code = codeLines.join('\n').replace(/`/g, "");
+        if(details.language){
+          code = getScriptToRunCode(code,details); 
+        }      
         const runCommand: vscode.Command = {
           title: "Run",
           command: "markdown-copy-code.runcode",
-          arguments: [content.replace(/`/g, ""), runPosition, false],
+          arguments: [code, details, false],
         };
         const runRange = document.getWordRangeAtPosition(
           runPosition,

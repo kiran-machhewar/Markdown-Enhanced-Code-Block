@@ -7,11 +7,11 @@ import { CodelensProvider } from "./CodelensProvider";
 
 // extensions is activated whennever a markdown file is opened in the editor
 export function activate(context: vscode.ExtensionContext) {
-  const codelensProvider = new CodelensProvider();  
+  const codelensProvider = new CodelensProvider();
   // Register the codelense provider
   vscode.languages.registerCodeLensProvider("*", codelensProvider);
 
-	// handle markdown-copy-code.copycode command
+  // handle markdown-copy-code.copycode command
   vscode.commands.registerCommand(
     "markdown-copy-code.copycode",
     async (content: any) => {
@@ -20,26 +20,37 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 
-	// handle markdown-copy-code.runcode command
+  // handle markdown-copy-code.runcode command
   vscode.commands.registerCommand(
     "markdown-copy-code.runcode",
-    async (content: any, position: vscode.Position) => {
+    async (content: any, details: any) => {
       let terminal: any = vscode.window.activeTerminal;
       if (!terminal) {
         terminal = await vscode.window.createTerminal("Code Runner");
+      }
+      if (
+        (details.language === "apex" || details.language === "soql") &&
+        !details.org
+      ) {
+        vscode.window.showErrorMessage(
+          "Org is not passed, Please pass org like ```" +
+            details.language +
+            "|<sfdx-org-alias>"
+        );
+        return;
       }
       terminal.show();
       terminal.sendText(`${content}`);
     }
   );
 
-	// handle markdown-copy-code.replace-variables command
+  // handle markdown-copy-code.replace-variables command
   vscode.commands.registerCommand(
     "markdown-copy-code.replace-variables",
-    async (content: string, position: vscode.Position) => {      
+    async (content: string, position: vscode.Position) => {
       let currentDocumentURI = vscode.window.activeTextEditor?.document.uri;
       if (currentDocumentURI) {
-        content = replaceVariables(content);        
+        content = replaceVariables(content);
         let textEncoder: TextEncoder = new TextEncoder();
         if (vscode.workspace.workspaceFolders) {
           let tempFileUri = vscode.Uri.file(
@@ -49,7 +60,7 @@ export function activate(context: vscode.ExtensionContext) {
           vscode.workspace.fs.writeFile(
             tempFileUri,
             textEncoder.encode(content)
-          );          
+          );
           // show the code
           let location = new vscode.Location(
             tempFileUri,

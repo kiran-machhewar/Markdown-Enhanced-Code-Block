@@ -24,3 +24,27 @@ export function replaceVariables(content: string): string {
   });
   return rawContent;
 }
+
+/**
+ * Generates the script to run the code
+ * @param code code which needs to be executed
+ * @param details extra details like language, org , configuration
+ * @returns script to run the code
+ */
+export function getScriptToRunCode(code:string,details:any):string{ 
+  let script = code;
+  switch(details.language){
+    case 'apex':
+      script = `echo "${code}" | sfdx apex run -u ${details.org}`;     
+      break;
+    case 'soql':  
+      script = `sfdx data query -q "${code}" --target-org ${details.org}`
+      break;
+    case 'javascript':  
+      script = `echo "${code}" | node`;
+      break;
+    detault:
+      script = code;      
+  } 
+  return script;
+}
