@@ -21,6 +21,7 @@ Adds features to markdown codeblocks
 <video autoplay src="https://user-images.githubusercontent.com/4792950/223656415-cff3fea0-e6a6-45b7-8858-5f128d925959.mp4" controls="controls" style="max-width: 730px;">
 </video>
 
+---
 <video autoplay src="https://user-images.githubusercontent.com/4792950/224079908-39b7beef-14f7-4879-b4ab-72b2b108a4cc.mov" controls="controls" style="max-width: 730px;">
 </video>
 
