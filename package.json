@@ -3,6 +3,7 @@
   "publisher": "KiranMachhewar",
   "displayName": "Markdown Enhanced Code Block",
   "description": "Enhances the markdown codeblock with features like copy, run, replace variables etc",
+  "icon": "images/logo.png",
   "version": "0.1.0",
   "engines": {
     "vscode": "^1.76.0"
