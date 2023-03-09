@@ -1,9 +1,9 @@
 {
   "name": "markdown-enhanced-code-block",
-  "publisher":"KiranMachhewar",
+  "publisher": "KiranMachhewar",
   "displayName": "Markdown Enhanced Code Block",
   "description": "Enhances the markdown codeblock with features like copy, run, replace variables etc",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.76.0"
   },
@@ -15,8 +15,7 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [      
-    ]
+    "commands": []
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
