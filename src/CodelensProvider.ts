@@ -40,6 +40,9 @@ export class CodelensProvider implements vscode.CodeLensProvider {
       while ((matches = regex.exec(text)) !== null) {
         const reg = new RegExp(/(.+)/g);
         let content: string = matches[0];
+        let codeLines = content.split('\n');
+        codeLines.splice(0,1);        
+        let code = codeLines.join('\n').replace(/`/g, "");
         // Add Copy Command
         const line = document.lineAt(document.positionAt(matches.index).line);
         const copyPosition = new vscode.Position(line.lineNumber, 0);
@@ -50,7 +53,7 @@ export class CodelensProvider implements vscode.CodeLensProvider {
         const copyCommand: vscode.Command = {
           title: "Copy",
           command: "markdown-copy-code.copycode",
-          arguments: [content.replace(/`/g, ""), false],
+          arguments: [code, false],
         };
         if (copyRange) {
           this.codeLenses.push(new vscode.CodeLens(copyRange, copyCommand));
@@ -68,9 +71,7 @@ export class CodelensProvider implements vscode.CodeLensProvider {
             details.language === 'soql') && codeConfigs.split('|').length > 0) {
           details.org = codeConfigs.split('|')[1];          
         }
-        let codeLines = content.split('\n');
-        codeLines.splice(0,1);        
-        let code = codeLines.join('\n').replace(/`/g, "");
+        
         if(details.language){
           code = getScriptToRunCode(code,details); 
         }      
