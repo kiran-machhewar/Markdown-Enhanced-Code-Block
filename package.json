@@ -6,7 +6,7 @@
   "icon": "images/logo.png",
   "version": "0.6.0",
   "engines": {
-    "vscode": "^1.76.0"
+    "vscode": "^1.70.0"
   },
   "categories": [
     "Other"
@@ -27,7 +27,7 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.76.0",
+    "@types/vscode": "^1.70.0",
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
