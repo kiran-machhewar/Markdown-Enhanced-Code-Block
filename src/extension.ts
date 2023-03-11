@@ -2,7 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import { TextEncoder } from "util";
 import * as vscode from "vscode";
-import { replaceVariables } from "./MarkdownUtil";
+import { replaceVariables, isSandbox } from "./MarkdownUtil";
 import { CodelensProvider } from "./CodelensProvider";
 
 // extensions is activated whennever a markdown file is opened in the editor
@@ -28,16 +28,29 @@ export function activate(context: vscode.ExtensionContext) {
       if (!terminal) {
         terminal = await vscode.window.createTerminal("Code Runner");
       }
-      if (
-        (details.language === "apex" || details.language === "soql") &&
-        !details.org
-      ) {
-        vscode.window.showErrorMessage(
-          "Org is not passed, Please pass org like ```" +
-            details.language +
-            "|<sfdx-org-alias>"
-        );
-        return;
+      if (details.language === "apex" || details.language === "soql") {
+        if (!details.org) {
+          vscode.window.showErrorMessage(
+            "Org is not passed, Please pass org like ```" +
+              details.language +
+              "|<sfdx-org-alias>"
+          );
+          return;
+        }
+
+        if (details.language === "apex") {
+          let isOrgSandbox = await isSandbox(details.org);
+          if (!isOrgSandbox) {
+            let confirmation = await vscode.window.showInformationMessage(
+              "You are running this on production, are you sure?",
+              "Yes",
+              "No"
+            );
+            if (confirmation !== "Yes") {
+              return;
+            }
+          }
+        }
       }
       terminal.show();
       terminal.sendText(`${content}`);

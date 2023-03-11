@@ -1,3 +1,5 @@
+import { exec } from "child_process";
+
 /**
  * Replaces variables from the content and removes the variable mappings
  * @param content Content which has variables
@@ -31,20 +33,40 @@ export function replaceVariables(content: string): string {
  * @param details extra details like language, org , configuration
  * @returns script to run the code
  */
-export function getScriptToRunCode(code:string,details:any):string{ 
+export function getScriptToRunCode(code: string, details: any): string {
   let script = code;
-  switch(details.language){
-    case 'apex':
-      script = `echo "${code}" | sfdx apex run -u ${details.org}`;     
+  switch (details.language) {
+    case "apex":
+      script = `echo "${code}" | sfdx apex run -u ${details.org}`;
       break;
-    case 'soql':  
-      script = `sfdx data query -q "${code}" --target-org ${details.org}`
+    case "soql":
+      script = `sfdx data query -q "${code}" --target-org ${details.org}`;
       break;
-    case 'javascript':  
+    case "javascript":
       script = `echo "${code}" | node`;
       break;
-    detault:
-      script = code;      
-  } 
+      detault: script = code;
+  }
   return script;
+}
+
+export async function isSandbox(org: string): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    exec(
+      `sfdx data query -q "SELECT IsSandbox FROM Organization LIMIT 1" --json --target-org ${org}`,
+      (error: any, stdout: any, stderr: any) => {
+        console.log(stderr);
+        if (error !== null) {
+          reject("Not able to identify if the org is sandbox or production");
+        } else {
+          let jsonData = JSON.parse(stdout);
+          if (jsonData?.result?.records[0]) {
+            resolve(jsonData?.result?.records[0].IsSandbox);
+          } else {
+            reject("Not able to identify if the org is sandbox or production");
+          }
+        }
+      }
+    );
+  });
 }
