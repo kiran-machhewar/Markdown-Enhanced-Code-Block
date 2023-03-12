@@ -16,7 +16,7 @@ Adds features to markdown codeblocks
 #### Replace variables
 - Makes code block configurable by replacing the variables
 
-### Configurtion
+### Configuration
 ##### Disable Run Button
 By default the run button will be displayed on every code block, this setting will help in disabling the run button.
 
