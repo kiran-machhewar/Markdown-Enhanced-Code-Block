@@ -39,8 +39,22 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         if (details.language === "apex") {
-          let isOrgSandbox = await isSandbox(details.org);
-          if (!isOrgSandbox) {
+          let typeOfOrg = context.globalState.get(
+            "markdown-enhanced-code-block-org-" + details.org
+          );
+          if (!typeOfOrg) {
+            const isOrgSandbox = await isSandbox(details.org);
+            if (isOrgSandbox) {
+              typeOfOrg = "Sandbox";
+            } else {
+              typeOfOrg = "Production";
+            }
+            context.globalState.update(
+              "markdown-enhanced-code-block-org-" + details.org,
+              typeOfOrg
+            );
+          }
+          if (typeOfOrg === "Production") {
             let confirmation = await vscode.window.showInformationMessage(
               "You are running this on production, are you sure?",
               "Yes",
