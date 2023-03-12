@@ -16,7 +16,16 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": []
+    "commands": [],
+    "configuration": {
+      "properties": {
+          "markdown-enhanced-code-block.disableRunButton": {
+              "type": "boolean",
+              "default": false,
+              "description": "Disables the run button."
+          }
+      }
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
