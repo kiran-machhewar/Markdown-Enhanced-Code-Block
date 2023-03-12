@@ -4,7 +4,7 @@
   "displayName": "Markdown Enhanced Code Block",
   "description": "Enhances the markdown codeblock with features like copy, run, replace variables etc",
   "icon": "images/logo.png",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "engines": {
     "vscode": "^1.70.0"
   },
@@ -19,11 +19,11 @@
     "commands": [],
     "configuration": {
       "properties": {
-          "markdown-enhanced-code-block.disableRunButton": {
-              "type": "boolean",
-              "default": false,
-              "description": "Disables the run button."
-          }
+        "markdown-enhanced-code-block.disableRunButton": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disables the run button."
+        }
       }
     }
   },
