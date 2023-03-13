@@ -20,6 +20,9 @@ Adds features to markdown codeblocks
 ##### Disable Run Button
 By default the run button will be displayed on every code block, this setting will help in disabling the run button.
 
+##### Clear Terminal Before Run
+Clears the terminal before executing run. By default this is disabled.
+
 ### Demo
 
 <video autoplay src="https://user-images.githubusercontent.com/4792950/223656415-cff3fea0-e6a6-45b7-8858-5f128d925959.mp4" controls="controls" style="max-width: 730px;">
