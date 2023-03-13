@@ -23,6 +23,11 @@
           "type": "boolean",
           "default": false,
           "description": "Disables the run button."
+        },
+        "markdown-enhanced-code-block.clearTerminalBeforeRun": {
+          "type": "boolean",
+          "default": false,
+          "description": "Clear terminal before run"
         }
       }
     }

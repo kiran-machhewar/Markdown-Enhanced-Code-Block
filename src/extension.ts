@@ -66,7 +66,12 @@ export function activate(context: vscode.ExtensionContext) {
           }
         }
       }
-      terminal.show();
+      terminal.show();      
+      if(vscode.workspace
+          .getConfiguration("markdown-enhanced-code-block")
+          .get("clearTerminalBeforeRun", true)){
+        vscode.commands.executeCommand("workbench.action.terminal.clear");        
+      }      
       terminal.sendText(`${content}`);
     }
   );
